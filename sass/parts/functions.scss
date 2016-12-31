@@ -1,0 +1,89 @@
+// @if not-imported("your-file") { @import "your-file"; }
+$imported-once-files: () !default;
+
+@function not-imported($file-name) {
+  $imported-once-files: $imported-once-files !global;
+  $module-index: index($imported-once-files, $file-name);
+  @if (($module-index == null) or ($module-index == false)) {
+    $imported-once-files: append($imported-once-files, $file-name);
+    @return true;
+  }
+  @return false;
+}
+
+@function em($size: 16) {
+  @return $size / 16+em;
+};
+
+@function rem($size: 16) {
+  @return $size / 16+rem;
+};
+
+@function get-vw($max-breakpoint, $target) {
+  // 1 vw is equal to 1% of the viewport width
+  $vw-context: ($max-breakpoint * .01) * 1; // 1% viewport width
+  @return ($target/$vw-context) * 1vw;
+}
+
+@function get-vh($max-breakpoint, $target) {
+  // 1 vh is equal to 1% of the viewport height
+  $vw-context: ($max-breakpoint * .01) * 1; // 1% viewport height
+  @return ($target/$vw-context) * 1vh;
+}
+
+@function fetch-from-multidimensional-map($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function change-multidimensional-map-value($map, $keys, $value) {
+  $maps: ($map,);
+  $result: null;
+
+  // If the last key is a map already
+  // Warn the user we will be overriding it with $value
+  @if type-of(nth($keys, -1)) == "map" {
+    @warn "The last key you specified is a map; it will be overrided with `#{$value}`.";
+  }
+
+  // If $keys is a single key
+  // Just merge and return
+  @if length($keys) == 1 {
+    @return map-merge($map, ($keys: $value));
+  }
+
+  // Loop from the first to the second to last key from $keys
+  // Store the associated map to this key in the $maps list
+  // If the key doesn't exist, throw an error
+  @for $i from 1 through length($keys) - 1 {
+    $current-key: nth($keys, $i);
+    $current-map: nth($maps, -1);
+    $current-get: map-get($current-map, $current-key);
+    @if $current-get == null {
+      @error "Key `#{$key}` doesn't exist at current level in map.";
+    }
+    $maps: append($maps, $current-get);
+  }
+
+  // Loop from the last map to the first one
+  // Merge it with the previous one
+  @for $i from length($maps) through 1 {
+    $current-map: nth($maps, $i);
+    $current-key: nth($keys, $i);
+    $current-val: if($i == length($maps), $value, $result);
+    $result: map-merge($current-map, ($current-key: $current-val));
+  }
+
+  // Return result
+  @return $result;
+}
+
+@function width-to-percent($element-pixel-width:0, $wrap-pixels-width: 0) {
+  @return percentage($element-pixel-width/$wrap-pixels-width);
+}
+
+@function height-to-percent($element-pixel-height: 0, $wrap-pixels-height: 0, $double-to: 1.5) {
+  @return percentage($element-pixel-height/$wrap-pixels-height) * $double-to;
+}

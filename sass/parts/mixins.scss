@@ -1,0 +1,218 @@
+@if not-imported("variables") { @import "variables"; }
+@if not-imported("functions") { @import "functions"; }
+
+@mixin triangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-top: $size solid $color;
+  position: absolute;
+  top: $yRange;
+  left: $xRange;
+  transform: rotate($rotateDegree);
+}
+
+@mixin list-triangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-top: $size solid $color;
+  position: absolute;
+  top: $yRange;
+
+  @if ($rtl == true) {
+    right: $xRange;
+  } @else {
+    left: $xRange;
+  }
+
+  transform: rotate($rotateDegree);
+}
+
+@mixin move-to($direction: left) {
+  @if ($rtl == true) {
+    $direction: right;
+  }
+  float: $direction;
+}
+
+@mixin disable-float() {
+  clear: both;
+  &:after {
+    display: table;
+    content: " ";
+  }
+}
+
+@mixin set-position($position: relative, $xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
+  position: $position;
+
+  @if ($xDirection == left) {
+    left: em($xRange);
+  }
+
+  @if ($xDirection == right) {
+    right:  em($xRange);
+  }
+
+  @if ($yDirection == top) {
+    top:  em($yRange);
+  }
+
+  @if ($yDirection == bottom) {
+    bottom:  em($yRange);
+  }
+
+  @if ($zIndex != null) {
+    z-index: $zIndex;
+  }
+}
+
+@mixin flex-flow($direction, $wrap) {
+  flex-flow: $direction $wrap;
+}
+
+@mixin flex-items-size($width: 1, $height: 1, $size: null) {
+  @if ($size != null) {
+    flex: $width $height $size;
+  } @else {
+    flex: $width $height;
+  }
+}
+
+@mixin display-flex($direction: $flexShortHandDirection, $justifyContent: null, $alignItems: null, $alignContent: null) {
+    flex-flow: $direction;
+
+    @if ($justifyContent != null) {
+        justify-content: $justifyContent;
+    }
+
+    @if ($alignItems != null) {
+        align-items: $alignItems;
+    }
+
+    @if ($alignContent != null) {
+        align-content: $alignContent;
+    }
+
+}
+
+@mixin placeholder($color: $fontColor) {
+  ::-webkit-input-placeholder {
+    color: $color;
+    font-family: $fontFamily;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: $fontColor;
+    font-family: $fontFamily;
+  }
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: $fontColor;
+    font-family: $fontFamily;
+  }
+  :-ms-input-placeholder {
+    color: $fontColor;
+    font-family: $fontFamily;
+  }
+  input:focus::-webkit-input-placeholder,
+  textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+  input:focus:-moz-placeholder,
+  textarea:focus:-moz-placeholder { /* Firefox 18- */
+    color: transparent;
+  }
+  input:focus::-moz-placeholder,
+  textarea:focus::-moz-placeholder {  /* Firefox 19+ */
+    color: transparent;
+  }
+  input:focus:-ms-input-placeholder,
+  textarea:focus:-ms-input-placeholder {
+    color: transparent;
+  }
+}
+
+@mixin border-radius($radius: 0) {
+  border-radius: ($radius != 0, $radius+px, $baseRadius+px);
+  border-radius: ($radius != 0, rem($radius), rem($baseRadius));
+}
+
+@mixin svg($size:$svgBaseSize, $fill:$fontColor) {
+  width: em($svgBaseSize);
+  height: em($svgBaseSize);
+  fill: $fill;
+}
+
+@mixin display-style($style: null) {
+
+  @if ($style == null) {
+    $style: $display;
+  }
+  display: $style;
+}
+
+@mixin has-bottom-padding($size) {
+  padding-bottom: $size;
+}
+
+@mixin set-columns($number) {
+  $splitTo: $columnNumber;
+  @if ($number < $columnNumber) {
+    $splitTo: $number;
+  }
+
+  @for $i from 1 through $splitTo {
+    .col-#{$i} {
+      width: (100% / $splitTo * $i);
+      padding: 0 $gutter+px;
+      padding: 0 rem($gutter);
+    }
+  }
+
+}
+
+@mixin reset-gutter() {
+  margin: 0 -$gutter+px;
+  margin: 0 rem(-$gutter);
+}
+
+@mixin pretty-row-view($countItems, $floatDirection: left) {
+  width: ( ( 100% - ( ($countItems - 1) * 2% ) ) /  $countItems);
+  padding: 10px;
+  padding: rem(10);
+  margin-#{$floatDirection}: 2%;
+  &:nth-child(#{$countItems}) {
+    margin-#{$floatDirection}: 0;
+  }
+  float: $floatDirection;
+}
+
+@mixin reset-defaults() {
+  *,
+  *:after,
+  *:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+@mixin base-styles() {
+
+}
+
+@mixin menu-base-styles() {
+
+}
+
+
+
+
+
+
+
+

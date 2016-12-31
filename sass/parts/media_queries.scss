@@ -1,0 +1,33 @@
+@mixin web-media-query($breackpoint) {
+  @if (map-has-key($breackpoints, $breackpoint)) {
+    @media (max-width: map_get($breackpoints, $breackpoint)) , (max-device-width: map_get($breackpoints, $breackpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin mobile-media-query($mobile-breackpoints-map, $device-name, $orientation) {
+
+  @each $device, $settings in $mobile-breackpoints-map {
+
+    @if ($device == $device-name) {
+      $min-device-width: map-get($settings, min-device-width ) !global;
+      $max-device-width: map-get($settings, max-device-width) !global;
+      $pixel-ratio:  map-get($settings, pixel-ratio) !global;
+    }
+
+  }
+
+  $query: "";
+  $media: " (min-device-width: #{$min-device-width})
+                     and (max-device-width: #{$max-device-width})
+                     and (-webkit-device-pixel-ratio: #{$pixel-ratio})";
+  $query: $media;
+    @if ($orientation != null) {
+    $query: $media + " and (orientation: #{$orientation})";
+    }
+
+  @media screen and #{$query} {
+    @content;
+  }
+}

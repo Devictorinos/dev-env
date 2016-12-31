@@ -1,0 +1,151 @@
+//--------------------------//
+//------- VARIABLES --------//
+
+//--- Set Generals
+$rtl: true !default;
+$imagesSrc: 'images/' !default;
+$baseRadius: 6 !default;
+$svgBaseSize: 10 !default;
+
+//--------------------------//
+
+//------ Grid ------//
+
+$columnNumber: 12  !default;
+$gutter: percentage(30)  !default;
+
+//--- Block Grid
+$display: block !default;
+$baseWidth: 100% !default;
+$baseHeight: auto !default;
+$containerLargeDesktop: 1140 !default;
+$containerDesktop: 940 !default;
+$containerTablet: 720 !default;
+$containerHeight: auto !default;
+
+//---Flex Grid
+$flexDirection: row !default;
+$flexShortHandDirection: row wrap !default;
+$flexWidth: 1 !default;
+$flexWrap: wrap !default;
+$justifyContent: space-around !default;
+$alignItems: center !default;
+$alignContent: center !default;
+
+//--------------------------//
+
+//--- Typography
+$fontSizeBase: 14 !default;
+$fontSizeLarge: ceil(($fontSizeBase * 1.25)) !default;
+$fontSizeSmall: ceil(($fontSizeBase * 0.85)) !default;
+$fontSizeH1: floor(($fontSizeBase * 2.6)) !default;
+$fontSizeH2: floor(($fontSizeBase * 2.15)) !default;
+$fontSizeH3: floor(($fontSizeBase * 1.7)) !default;
+$fontSizeH4: floor(($fontSizeBase * 1.25)) !default;
+$fontSizeH5: $fontSizeBase !default;
+$fontSizeH6: floor(($fontSizeBase * 0.85)) !default;
+$fontWeight: 400 !default;
+$headingFontWeight: 500 !default;
+$lineHeightBase: 1.428571429 !default;
+$headingLineHeight: 1.1 !default;
+$lineHeightComputed: floor(($fontSizeBase * $lineHeightBase)) !default;
+$fontFamily: 'Assistant' !default;
+
+//--- Colors
+$fontColor: #2d2d2d !default;
+$bodyFontColor: #222222 !default;
+$bodyBackground: #ffffff !default;
+$headerFontColor: #222222 !default;
+$primaryColor: #2ba6cb !default;
+$secondaryColor: #e9e9e9 !default;
+$warningFontColor: #ffae00 !default;
+$alertFontColor: #c60f13 !default;
+$successFontColor: #5da423 !default;
+$infoFontColor: #5bc0de !default;
+$linkFontColor: darken(#428bca, 6.5%) !default;
+$linkHoverFontColor: darken(#428bca, 15%) !default;
+
+//--------------------------//
+
+//-- Thumbnail
+
+$thumbnailPadding: 4 !default;
+$thumbnailBorderColor: #dddddd !default;
+$thumbnailBorderRadius: 3 !default;
+$thumbnailCaptionPadding: 9 !default;
+$thumbnail-caption-color: $fontColor!default
+$thumbnailBackground: $bodyBackground !default;
+
+//------- Media Queries Objects -------//
+
+//--- Mobile
+$withOrientation: false;
+$orientation: both !default;
+$retinaResolution: 192dpi !default;
+$minDeviceWidth: null;
+$maxDeviceWidth: null;
+
+//--------------------------//
+
+//--- Breakpoints
+$breakpoints: (
+        extra-small: 320,
+        small: 480,
+        medium: 768,
+        large: 992,
+        extra-large: 1200,
+        custom-950: 950,
+        custom-800: 800,
+        custom-874: 874,
+        custom-750: 750,
+        custom-1249: 1249,
+);
+$mobileBreakpoints: (
+        iphone4-and-4s: (
+                min-device-width: 320,
+                max-device-width: 480,
+                pixel-ratio: 2,
+                mode-landscape: landscape,
+                mode-portrait: portrait
+        ),
+        iphone5-and-5s: (
+                min-device-width: 320,
+                max-device-width: 568,
+                pixel-ratio: 2
+        ),
+        iphone6: (
+                min-device-width: 375,
+                max-device-width: 667,
+                pixel-ratio: 2
+        ),
+        iphone6-plus: (
+                min-device-width: 414,
+                max-device-width: 736,
+                pixel-ratio: 3
+        ),
+
+        galaxy-s3: (
+                min-device-width: 320,
+                max-device-width: 640,
+                pixel-ratio: 2
+        ),
+        galaxy-s4: (
+                min-device-width: 320,
+                max-device-width: 640,
+                pixel-ratio: 3
+        ),
+        galaxy-s5-and-above: (
+                min-device-width: 360,
+                max-device-width: 640,
+                pixel-ratio: 3
+        ),
+        rest: (
+
+        )
+);
+
+$laptopsBreakpoints: (
+        laptop-min-width: 1200,
+        laptop-max-width: 1600
+);
+
