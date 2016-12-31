@@ -3,9 +3,13 @@
 
 //--- Set Generals
 $rtl: true !default;
-$imagesSrc: 'images/' !default;
+$imagesDirPath: 'images/' !default;
+$iconsDirPath: 'images/icons/' !default;
+$spritesDirPath: 'images/sprites/' !default;
+$fontDirPath: 'fonts/' !default;
 $baseRadius: 6 !default;
 $svgBaseSize: 10 !default;
+$positionBase: relative !default;
 
 //--------------------------//
 
@@ -22,6 +26,7 @@ $containerLargeDesktop: 1140 !default;
 $containerDesktop: 940 !default;
 $containerTablet: 720 !default;
 $containerHeight: auto !default;
+$iFrameWidth: 100% !default;
 
 //---Flex Grid
 $flexDirection: row !default;
@@ -35,7 +40,6 @@ $alignContent: center !default;
 //--------------------------//
 
 //--- Typography
-$fontSizeBase: 14 !default;
 $fontSizeLarge: ceil(($fontSizeBase * 1.25)) !default;
 $fontSizeSmall: ceil(($fontSizeBase * 0.85)) !default;
 $fontSizeH1: floor(($fontSizeBase * 2.6)) !default;
@@ -49,7 +53,12 @@ $headingFontWeight: 500 !default;
 $lineHeightBase: 1.428571429 !default;
 $headingLineHeight: 1.1 !default;
 $lineHeightComputed: floor(($fontSizeBase * $lineHeightBase)) !default;
-$fontFamily: 'Assistant' !default;
+$fontSizeBase: 14 !default;
+$fontStyleBase: normal !default;
+$baseFont: Arial !default;
+$baseFontUrl: null !default;
+$alignText: left !default;
+$direction: ltr !default;
 
 //--- Colors
 $fontColor: #2d2d2d !default;
@@ -79,7 +88,7 @@ $thumbnailBackground: $bodyBackground !default;
 //------- Media Queries Objects -------//
 
 //--- Mobile
-$withOrientation: false;
+$withOrientation: false !default;
 $orientation: both !default;
 $retinaResolution: 192dpi !default;
 $minDeviceWidth: null;
