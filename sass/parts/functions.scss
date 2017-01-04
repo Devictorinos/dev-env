@@ -1,14 +1,18 @@
 // @if not-imported("your-file") { @import "your-file"; }
-$imported-once-files: () !default;
+$importedOnceFiles: () !default;
 
-@function not-imported($file-name) {
-  $imported-once-files: $imported-once-files !global;
-  $module-index: index($imported-once-files, $file-name);
-  @if (($module-index == null) or ($module-index == false)) {
-    $imported-once-files: append($imported-once-files, $file-name);
+@function not-imported($fileName) {
+  $importedOnceFiles: $importedOnceFiles !global;
+  $moduleIndex: index($importedOnceFiles, $fileName);
+  @if (($moduleIndex == null) or ($moduleIndex == false)) {
+    $importedOnceFiles: append($importedOnceFiles, $fileName);
     @return true;
   }
   @return false;
+}
+
+@function px($size) {
+  @return $size+px;
 }
 
 @function em($size: 16) {
@@ -18,6 +22,10 @@ $imported-once-files: () !default;
 @function rem($size: 16) {
   @return $size / 16+rem;
 };
+
+@function to-type($size, $type:px) {
+  @return ($type($size));
+}
 
 @function get-vw($maxBreakpoint, $target) {
   // 1 vw is equal to 1% of the viewport width
@@ -58,22 +66,22 @@ $imported-once-files: () !default;
   // Store the associated map to this key in the $maps list
   // If the key doesn't exist, throw an error
   @for $i from 1 through length($keys) - 1 {
-    $current-key: nth($keys, $i);
-    $current-map: nth($maps, -1);
-    $current-get: map-get($current-map, $current-key);
-    @if $current-get == null {
+    $currentKey: nth($keys, $i);
+    $currentMap: nth($maps, -1);
+    $currentGet: map-get($currentMap, $currentKey);
+    @if $currentGet == null {
       @error "Key `#{$key}` doesn't exist at current level in map.";
     }
-    $maps: append($maps, $current-get);
+    $maps: append($maps, $currentGet);
   }
 
   // Loop from the last map to the first one
   // Merge it with the previous one
   @for $i from length($maps) through 1 {
-    $current-map: nth($maps, $i);
-    $current-key: nth($keys, $i);
-    $current-val: if($i == length($maps), $value, $result);
-    $result: map-merge($current-map, ($current-key: $current-val));
+    $currentMap: nth($maps, $i);
+    $currentKey: nth($keys, $i);
+    $currentVal: if($i == length($maps), $value, $result);
+    $result: map-merge($currentMap, ($currentKey: $currentVal));
   }
 
   // Return result
@@ -89,13 +97,15 @@ $imported-once-files: () !default;
 }
 
 @function set-font-family($fontName: null) {
-  $font: null;
+  $font: $fontName;
   @if ($fontName == 'Assistant') {
     $font: 'Assistant', sans-serif;
   } @else if ($fontName == 'Open') {
     $font: 'Open Sans Hebrew', sans-serif;
   } @else if($fontName == 'Almoni') {
     $font: 'Almoni';
+  } @else {
+    $font: $fontName;
   }
   @return $font;
 }
@@ -112,6 +122,12 @@ $imported-once-files: () !default;
   @return $property $time $style;
 }
 
-@mixin set-display($style: null) {
-  @return ($style == null, $display, $style);
+@function set-display($style: null) {
+
+    @if ($style == null) {
+      $style: $display;
+    } @else {
+      $style: $style;
+    }
+  @return $style;
 }

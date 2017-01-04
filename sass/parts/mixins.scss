@@ -1,5 +1,5 @@
-@if not-imported("variables") { @import "variables"; }
-@if not-imported("functions") { @import "functions"; }
+//@if not-imported("variables") { @import "variables"; }
+//@if not-imported("functions") { @import "functions"; }
 
 @mixin triangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
   content: "";
@@ -100,7 +100,7 @@
   position: $position;
 }
 
-@mixin set-range($xDirection: left, $xRange: 0, $yDirection: top, $yRange: 0,) {
+@mixin set-range($xDirection: left, $xRange: 0, $yDirection: top, $yRange: 0) {
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
   #{$yDirection}: $yRange+px;
@@ -176,8 +176,14 @@
 }
 
 @mixin border-radius($radius: 0) {
-  border-radius: ($radius != 0, $radius+px, $baseRadius+px);
-  border-radius: ($radius != 0, rem($radius), rem($baseRadius));
+
+  @if ($radius != 0) {
+    border-radius: px($radius);
+    border-radius: rem($radius);
+  } @else {
+    border-radius: px($baseRadius);
+    border-radius: rem($baseRadius);
+  }
 }
 
 @mixin svg($size:$svgBaseSize, $fill:$fontColor) {
@@ -187,7 +193,12 @@
 }
 
 @mixin display-style($style: null) {
-  display: ($style == null, $display, $style);
+
+  @if ($style == null) {
+    display: $display;
+  } @else {
+    display: $style;
+  }
 }
 
 @mixin has-bottom-padding($size) {
@@ -195,7 +206,7 @@
 }
 
 @mixin reset-gutter() {
-  margin: 0 -$gutter+px;
+  margin: 0 px(-$gutter);
   margin: 0 rem(-$gutter);
 }
 
@@ -208,7 +219,7 @@
   @for $i from 1 through $splitTo {
     .col-#{$i} {
       width: (100% / $splitTo * $i);
-      padding: 0 $gutter+px;
+      padding: 0 px($gutter);
       padding: 0 rem($gutter);
     }
   }
@@ -216,16 +227,21 @@
 }
 
 @mixin set-direction($isRtl: $rtl) {
-  direction: ($isRtl == true, rtl, ltr);
+
+  @if ($isRtl == true) {
+    direction: rtl;
+  } @else {
+    direction: ltr;
+  }
 }
 
 @mixin set-width ($number) {
-  width: #{$number}px;
+  width: px($number);
   width: rem($number);
 }
 
 @mixin set-height ($number) {
-  height: #{$number}px;
+  height: px($number);
   height: rem($number);
 }
 
@@ -241,10 +257,13 @@
   transition: $property $time $style;
 }
 
-
 @mixin pretty-row-view($countItems: 0, $floatDirection: left) {
 
-  $columnsCount: ($countItems == 0, $columnNumber , $countItems);
+  @if ($countItems == 0) {
+    $columnsCount: $columnNumber;
+  } @else {
+    $columnsCount: $countItems;
+  }
 
   width: (( 100% - ( ($columnsCount - 1) * 2% ) ) / $columnsCount);
   padding: 10px;
@@ -257,7 +276,12 @@
 }
 
 @mixin margin-auto($bothZero: true, $top: 0, $bottom: 0) {
-  margin: ($bothZero == true, 0 auto, $top auto $bottom);
+
+  @if ($bothZero == true) {
+    margin: 0 auto;
+  } @else {
+    margin: $top auto $bottom;
+  }
 }
 
 @mixin reset-defaults() {
@@ -281,7 +305,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: $default-font-weight;
+    font-weight: $fontWeight;
     margin: 0;
     padding: 0;
   }
@@ -290,10 +314,20 @@
     list-style-type: none;
   }
 
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
-@mixin base-font-family() {
-  $fontFamily: (set-font-family() == null, $baseFont, set-font-family());
+@mixin base-font-family($fontName) {
+
+  @if (set-font-family($fontName) == null) {
+    $fontFamily: $baseFont !global;
+  } @else {
+    $fontFamily: set-font-family($fontName) !global;
+  }
+
   @if ($fontFamily == 'Assistant') {
     @import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
   } @else if ($fontFamily == 'Open') {
@@ -336,14 +370,16 @@
       url('fonts/almoni/almoni-dl-aaa-900.woff') format('woff');
     }
   }
+
+  @debug $fontFamily;
 }
 
 @mixin base-styles() {
 
   body {
     font-family: $fontFamily;
-    font-size: $default-font-size;
-    font-weight: $default-font-weight;
+    font-size: $fontSizeBase;
+    font-weight: $fontWeight;
     height: set-calc-height(0);
     @include  set-direction();
   }
@@ -892,7 +928,7 @@
   }
   ::-webkit-input-placeholder {
     color: black;
-    font-family:
+    font-family: $baseFont;
   }
   :-moz-placeholder {
     color: black;
@@ -1176,8 +1212,8 @@
   }
 }
 
-@mixin leos-template-styles() {
-  @include base-font-family();
+@mixin leos-template-styles($fontName) {
+  @include base-font-family($fontName);
   @include reset-defaults();
   @include base-styles();
   @include menu-base-styles();
