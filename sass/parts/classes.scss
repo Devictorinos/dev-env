@@ -1,105 +1,58 @@
-.clearfix {
-  @extend %clearfix;
-}
-
+// ==========>>>>> Display Flex Classes <<<<<========== //
 .flex {
-  @extend %flex;
+  @include getComponent(display-flex);
+}
+// ===> flex row
+.flex-r {
+  @include getComponent(flex-row);
 }
 
-/*
-*** Flex Row ***
-*/
-.flex-row {
-  @extend %flex-row;
+.flex-rw {
+  @include getComponent(flex-row-wrap);
 }
 
-.flex-row-space-around {
-  @extend %flex-row-space-around;
+.flex-rr {
+  @include getComponent(flex-row-reverse);
 }
 
-.flex-row-space-between {
-  @extend %flex-row-space-between;
+.flex-rrw {
+  @include getComponent(flex-row-reverse-wrap);
 }
 
-.flex-row-centered {
-  @extend %flex-row-centered;
+// ===> flex column
+.flex-c {
+  @include getComponent(flex-column);
 }
 
-.flex-row-flex-start {
-  @extend %flex-row-flex-start;
+.flex-cw {
+  @include getComponent(flex-column-wrap);
 }
 
-.flex-row-flex-end {
-  @extend %flex-row-flex-end;
+.flex-cr{
+  @include getComponent(flex-column-reverse);
 }
 
-
-/*
-*** Flex Column ***
-*/
-.flex-column-space-between {
-  @extend %flex-column-space-between;
+.flex-crw {
+  @include getComponent(flex-column-reverse-wrap);
 }
 
-.flex-column-center {
-  @extend %flex-column-center;
+// ===> flex justify content
+.justify-fs {
+  @include getComponent(justify-start);
 }
 
-.flex-column-flex-start {
-  @extend %flex-column-flex-start;
+.justify-fe {
+  @include getComponent(justify-end);
 }
 
-.flex-column-flex-end {
-  @extend %flex-column-flex-end;
+.justify-fc {
+  @include getComponent(justify-center);
 }
 
-.equal-size {
-  @extend %equal-size;
+.justify-fsb {
+  @include getComponent(justify-space-between);
 }
 
-.circle-box {
-  @include border-radius(50%);
-}
-
-.big-img {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-
-.acf-map {
-  width: 100%;
-  height: 366px;
-  pointer-events: none;
-}
-
-.entry {
-  font-size: 20px;
-  line-height: 1.4;
-  color: #000;
-  p {
-    margin-bottom: 10px;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  ul {
-    margin: 0 20px;
-    list-style: inherit;
-  }
-  table {
-    border: 1px solid #000;
-    td {
-      border: 1px solid #000;
-    }
-    tr:nth-child(1) > td {
-      text-align: center;
-      background: #ccc;
-    }
-  }
-}
-
-.no-mobile {
-  display:none !important;
+.justify-fsa{
+  @include getComponent(justify-space-around);
 }

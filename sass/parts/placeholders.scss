@@ -1,0 +1,98 @@
+//set display
+@include setComponent(display-flex) {
+  display: setDisplay(flex);
+};
+
+//set direction
+//row
+@include setComponent(flex-row) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, r )
+  );
+};
+
+@include setComponent(flex-row-wrap) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, rw )
+  );
+};
+
+@include setComponent(flex-row-reverse) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, rr )
+  );
+};
+
+@include setComponent(flex-row-reverse-wrap) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, rrw )
+  );
+};
+
+//column
+@include setComponent(flex-column) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, c )
+  );
+};
+
+@include setComponent(flex-column-wrap) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, cw )
+  );
+};
+
+@include setComponent(flex-column-reverse) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, cr )
+  );
+};
+
+@include setComponent(flex-column-reverse-wrap) {
+  @include displayStyle(flex);
+  @include displayFlex(
+                  multiFetch($flexParamsMap, direction, crw )
+  );
+};
+
+//set justify
+@include setComponent(justify-start) {
+
+  @include justifyContent(
+                  multiFetch($flexParamsMap, justify, fs )
+  );
+};
+@include setComponent(justify-end) {
+
+  @include justifyContent(
+                  multiFetch($flexParamsMap, justify, fe )
+  );
+};
+@include setComponent(justify-center) {
+
+  @include justifyContent(
+                  multiFetch($flexParamsMap, justify, c )
+  );
+};
+@include setComponent(justify-space-between) {
+
+  @include justifyContent(
+                  multiFetch($flexParamsMap, justify, sb )
+  );
+};
+@include setComponent(justify-space-around) {
+
+  @include justifyContent(
+                  multiFetch($flexParamsMap, justify, sa )
+  );
+};
+
+
+

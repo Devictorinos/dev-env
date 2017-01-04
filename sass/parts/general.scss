@@ -3,9 +3,9 @@
 @import "variables";
 @import "media_queries";
 @import "mixins";
-@import "helpers";
+@import "placeholders";
 @import "classes";
 
-@include leos-template-styles();
+//@include leosTemplateStyles($baseFont);
 
 

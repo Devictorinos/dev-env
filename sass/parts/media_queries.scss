@@ -1,27 +1,25 @@
-@mixin web-media-query($breackpoint) {
-  @if (map-has-key($breackpoints, $breackpoint)) {
-    @media (max-width: map_get($breackpoints, $breackpoint)) , (max-device-width: map_get($breackpoints, $breackpoint)) {
+@mixin webMediaQuery($breakpoint) {
+  @if (map-has-key($breakpoints, $breakpoint)) {
+    @media (max-width: map_get($breakpoints, $breakpoint)) , (max-device-width: map_get($breackpoints, $breackpoint)) {
       @content;
     }
   }
 }
 
-@mixin mobile-media-query($mobile-breackpoints-map, $device-name, $orientation) {
+@mixin mobileMediaQuery($mobileBreakpointsMap, $deviceName, $orientation) {
 
-  @each $device, $settings in $mobile-breackpoints-map {
+  @each $device, $settings in $mobileBreakpointsMap {
 
-    @if ($device == $device-name) {
-      $min-device-width: map-get($settings, min-device-width ) !global;
-      $max-device-width: map-get($settings, max-device-width) !global;
-      $pixel-ratio:  map-get($settings, pixel-ratio) !global;
+    @if ($device == $deviceName) {
+      $minDeviceWidth: map-get($settings, min-device-width ) !global;
+      $maxDeviceWidth: map-get($settings, max-device-width) !global;
+      $pixelRatio:     map-get($settings, pixel-ratio) !global;
     }
 
   }
 
   $query: "";
-  $media: " (min-device-width: #{$min-device-width})
-                     and (max-device-width: #{$max-device-width})
-                     and (-webkit-device-pixel-ratio: #{$pixel-ratio})";
+  $media: " (min-device-width: #{$minDeviceWidth}) and (max-device-width: #{$maxDeviceWidth}) and (-webkit-device-pixel-ratio: #{$pixelRatio})";
   $query: $media;
     @if ($orientation != null) {
     $query: $media + " and (orientation: #{$orientation})";

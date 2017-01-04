@@ -2,6 +2,8 @@
 //------- VARIABLES --------//
 
 //--- Set Generals
+$debug: false !default;
+$flex: false !default;
 $rtl: true !default;
 $imagesDirPath: 'images/' !default;
 $iconsDirPath: 'images/icons/' !default;
@@ -21,6 +23,8 @@ $gutter: percentage(30)  !default;
 //--- Block Grid
 $display: block !default;
 $baseWidth: 100% !default;
+$calcWidth: $baseWidth;
+$calcHeight: $baseWidth;
 $baseHeight: auto !default;
 $containerLargeDesktop: 1140 !default;
 $containerDesktop: 940 !default;
@@ -36,6 +40,42 @@ $flexWrap: wrap !default;
 $justifyContent: space-around !default;
 $alignItems: center !default;
 $alignContent: center !default;
+$flexParamsMap: (
+  direction: (
+          r: row,
+          rw: row wrap,
+          rr: row-reverse,
+          rrw: row-reverse wrap,
+          c: column,
+          cw: column wrap,
+          cr: column-reverse,
+          crw: column-reverse wrap,
+  ),
+  justify: (
+          fs: flex-start,
+          fe: flex-end,
+          c: center,
+          sb: space-between,
+          sa: space-around,
+
+  ),
+  items: (
+          fs: flex-start,
+          fe: flex-end,
+          c: center,
+          b: baseline,
+          s: stretch,
+  ),
+  content: (
+          fs: flex-start,
+          fe: flex-end,
+          c: center,
+          sb: space-between,
+          sa: space-around,
+          s: stretch,
+  ),
+
+);
 
 //--------------------------//
 

@@ -1,5 +1,23 @@
-//@if not-imported("variables") { @import "variables"; }
-//@if not-imported("functions") { @import "functions"; }
+//set placeholder
+@mixin setComponent($placeholder) {
+  %#{$placeholder} {
+    @content;
+  }
+}
+//get placeholder
+@mixin getComponent($placeholder) {
+  @extend %#{$placeholder};
+}
+
+@mixin margin($direction, $value) {
+  margin-#{$direction}: px($value);
+  margin-#{$direction}: rem($value);
+}
+
+@mixin padding($direction, $value) {
+  padding-#{$direction}: px($value);
+  padding-#{$direction}: rem($value);
+}
 
 @mixin triangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
   content: "";
@@ -14,7 +32,7 @@
   transform: rotate($rotateDegree);
 }
 
-@mixin list-triangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
+@mixin listTriangle($rotateDegree: 90deg, $size: 25px, $color: #000000, $xRange: 0, $yRange: 0) {
   content: "";
   width: 0;
   height: 0;
@@ -33,14 +51,14 @@
   transform: rotate($rotateDegree);
 }
 
-@mixin move-to($direction: left) {
+@mixin moveTo($direction: left) {
   @if ($rtl == true) {
     $direction: right;
   }
   float: $direction;
 }
 
-@mixin clear-fix() {
+@mixin clearFix() {
   clear: both;
   &:after {
     display: table;
@@ -48,7 +66,7 @@
   }
 }
 
-@mixin set-position($position: $positionBase, $xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
+@mixin setPosition($position: $positionBase, $xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
   position: $position;
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
@@ -60,7 +78,7 @@
   }
 }
 
-@mixin set-position-relative($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
+@mixin setPositionRelative($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
   position: relative;
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
@@ -72,7 +90,7 @@
   }
 }
 
-@mixin set-position-absolute($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
+@mixin setPositionAbsolute($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
   position: absolute;
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
@@ -84,7 +102,7 @@
   }
 }
 
-@mixin set-position-fixed($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
+@mixin setPositionFixed($xDirection: left, $yDirection: top, $xRange: 0, $yRange: 0, $zIndex: null) {
   position: fixed;
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
@@ -96,26 +114,43 @@
   }
 }
 
-@mixin set-only-position($position: $positionBase) {
+@mixin setOnlyPosition($position: $positionBase) {
   position: $position;
 }
 
-@mixin set-range($xDirection: left, $xRange: 0, $yDirection: top, $yRange: 0) {
+@mixin setRange($xDirection: left, $xRange: 0, $yDirection: top, $yRange: 0) {
   #{$xDirection}: $xRange+px;
   #{$xDirection}: rem($xRange);
   #{$yDirection}: $yRange+px;
   #{$yDirection}: rem($yRange);
 }
 
-@mixin set-Z-index($zIndex) {
+@mixin setZIndex($zIndex) {
   z-index: $zIndex;
 }
 
-@mixin flex-flow($direction, $wrap) {
-  flex-flow: $direction $wrap;
+@mixin displayStyle($style: null) {
+
+  @if ($style == null) {
+    display: $display;
+  } @else {
+    display: $style;
+  }
 }
 
-@mixin flex-items-size($width: 1, $height: 1, $size: null) {
+@mixin flexJustifyContent($direction) {
+  justify-content: $direction;
+}
+
+@mixin alignItems($direction) {
+  align-items: $direction;
+}
+
+@mixin alignContent($direction) {
+  align-content: $direction;
+}
+
+@mixin flexItemsSize($width: 1, $height: 1, $size: null) {
   @if ($size != null) {
     flex: $width $height $size;
   } @else {
@@ -123,22 +158,22 @@
   }
 }
 
-@mixin display-flex($direction: $flexShortHandDirection, $justifyContent: null, $alignItems: null, $alignContent: null) {
+@mixin displayFlex($direction: $flexShortHandDirection) {
     flex-flow: $direction;
-
-    @if ($justifyContent != null) {
-        justify-content: $justifyContent;
-    }
-
-    @if ($alignItems != null) {
-        align-items: $alignItems;
-    }
-
-    @if ($alignContent != null) {
-        align-content: $alignContent;
-    }
-
 }
+
+@mixin justifyContent($justifyContent: center) {
+  justify-content: $justifyContent;
+}
+
+@mixin alignItems($alignItems: center) {
+  align-items: $alignItems;
+}
+
+@mixin alignContent($alignContent: center) {
+  align-content: $alignContent;
+}
+
 
 @mixin placeholder($color: $fontColor) {
   ::-webkit-input-placeholder {
@@ -175,7 +210,7 @@
   }
 }
 
-@mixin border-radius($radius: 0) {
+@mixin borderRadius($radius: 0) {
 
   @if ($radius != 0) {
     border-radius: px($radius);
@@ -192,25 +227,16 @@
   fill: $fill;
 }
 
-@mixin display-style($style: null) {
-
-  @if ($style == null) {
-    display: $display;
-  } @else {
-    display: $style;
-  }
-}
-
-@mixin has-bottom-padding($size) {
+@mixin hasBottomPadding($size) {
   padding-bottom: $size;
 }
 
-@mixin reset-gutter() {
+@mixin resetGutter() {
   margin: 0 px(-$gutter);
   margin: 0 rem(-$gutter);
 }
 
-@mixin set-columns($number) {
+@mixin setColumns($number) {
   $splitTo: $columnNumber;
   @if ($number < $columnNumber) {
     $splitTo: $number;
@@ -226,38 +252,7 @@
 
 }
 
-@mixin set-direction($isRtl: $rtl) {
-
-  @if ($isRtl == true) {
-    direction: rtl;
-  } @else {
-    direction: ltr;
-  }
-}
-
-@mixin set-width ($number) {
-  width: px($number);
-  width: rem($number);
-}
-
-@mixin set-height ($number) {
-  height: px($number);
-  height: rem($number);
-}
-
-@mixin set-calc-width($number) {
-  width: set-calc-width($number);
-}
-
-@mixin set-calc-height($number) {
-  height: set-calc-height($number);
-}
-
-@mixin transition($property: all, $time: 500ms, $style: linear) {
-  transition: $property $time $style;
-}
-
-@mixin pretty-row-view($countItems: 0, $floatDirection: left) {
+@mixin prettyRowView($countItems: 0, $floatDirection: left) {
 
   @if ($countItems == 0) {
     $columnsCount: $columnNumber;
@@ -275,7 +270,38 @@
   float: $floatDirection;
 }
 
-@mixin margin-auto($bothZero: true, $top: 0, $bottom: 0) {
+@mixin setDirection($isRtl: $rtl) {
+
+  @if ($isRtl == true) {
+    direction: rtl;
+  } @else {
+    direction: ltr;
+  }
+}
+
+@mixin setWidth ($number) {
+  width: px($number);
+  width: rem($number);
+}
+
+@mixin setHeight ($number) {
+  height: px($number);
+  height: rem($number);
+}
+
+@mixin setCalcWidth($number) {
+  width: set-calc-width($number);
+}
+
+@mixin setCalcHeight($number) {
+  height: setCalcHeight($number);
+}
+
+@mixin transition($property: all, $time: 500ms, $style: linear) {
+  transition: $property $time $style;
+}
+
+@mixin marginAuto($bothZero: true, $top: 0, $bottom: 0) {
 
   @if ($bothZero == true) {
     margin: 0 auto;
@@ -284,7 +310,14 @@
   }
 }
 
-@mixin reset-defaults() {
+@mixin floatTo($direction: $direction) {
+  @if ($rtl == true) {
+    $direction: right !global;
+  }
+  float: $direction;
+}
+
+@mixin resetDefaults() {
   *, *:after, *:before {
     margin: 0;
     padding: 0;
@@ -320,12 +353,12 @@
   }
 }
 
-@mixin base-font-family($fontName) {
+@mixin baseFontFamily($fontName) {
 
-  @if (set-font-family($fontName) == null) {
+  @if (setFontFamily($fontName) == null) {
     $fontFamily: $baseFont !global;
   } @else {
-    $fontFamily: set-font-family($fontName) !global;
+    $fontFamily: setFontFamily($fontName) !global;
   }
 
   @if ($fontFamily == 'Assistant') {
@@ -374,18 +407,18 @@
   @debug $fontFamily;
 }
 
-@mixin base-styles() {
+@mixin baseStyles() {
 
   body {
     font-family: $fontFamily;
     font-size: $fontSizeBase;
     font-weight: $fontWeight;
-    height: set-calc-height(0);
-    @include  set-direction();
+    height: setCalcHeight(0);
+    @include  setDirection();
   }
 
   .row {
-    @include reset-gutter();
+    @include resetGutter();
   }
 
   .wrapper {
@@ -394,10 +427,10 @@
 
   .container {
     width: $baseWidth;
-    max-width: $containerLargeDesktop+px;
+    max-width: px($containerLargeDesktop);
     max-width: rem($containerLargeDesktop);
     height: $baseHeight;
-    @include margin-auto();
+    @include marginAuto();
   }
 
   iframe {
@@ -405,8 +438,8 @@
   }
 
   #wrapper {
-    min-height: set-calc-height(0);
-    @include set-only-position(relative);
+    min-height: setCalcHeight(0);
+    @include setOnlyPosition(relative);
   }
 
   #content {
@@ -417,22 +450,22 @@
   .wrapper:after,
   .container:after,
   .row:after {
-    @include clear-fix();
+    @include clearFix();
   }
 
   .logo {
     font-size: 0;
   }
   .logo a {
-    display: inline-block;
+    display: setDisplay(inline-block);
   }
   .logo a img {
-    max-width: set-calc-width(0);
+    max-width: setCalcWidth(0);
   }
 
 }
 
-@mixin menu-base-styles() {
+@mixin menuBaseStyles() {
   ul {
     margin: 0 0 0 0;
     list-style: none;
@@ -520,7 +553,7 @@
   }
 }
 
-@mixin other-base-styles() {
+@mixin otherBaseStyles() {
   .acf-map {
     width: 100%;
     height: 366px;
@@ -628,7 +661,7 @@
   }
 }
 
-@mixin footer-base-styles() {
+@mixin footerBaseStyles() {
   footer {
     position: absolute;
     bottom: 64px;
@@ -698,7 +731,7 @@
   }
 }
 
-@mixin socials-base-styles() {
+@mixin socialsBaseStyles() {
   #FloatSocials {
     position: fixed;
     display: block;
@@ -743,7 +776,7 @@
   }
 }
 
-@mixin form-base-styles() {
+@mixin formBaseStyles() {
   /* Contact form style Start */
   span.wpcf7-form-control-wrap {
     width: 100%;
@@ -963,7 +996,7 @@
   }
 }
 
-@mixin mobile-base-styles() {
+@mixin mobileBaseStyles() {
   #content {
     padding-bottom:0;
   }
@@ -1212,15 +1245,15 @@
   }
 }
 
-@mixin leos-template-styles($fontName) {
-  @include base-font-family($fontName);
-  @include reset-defaults();
-  @include base-styles();
-  @include menu-base-styles();
-  @include other-base-styles();
-  @include footer-base-styles();
-  @include socials-base-styles();
-  @include form-base-styles();
+@mixin leosTemplateStyles($fontName) {
+  @include baseFontFamily($fontName);
+  @include resetDefaults();
+  @include baseStyles();
+  @include menuBaseStyles();
+  @include otherBaseStyles();
+  @include footerBaseStyles();
+  @include socialsBaseStyles();
+  @include formBaseStyles();
 }
 
 

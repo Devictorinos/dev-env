@@ -1,7 +1,22 @@
 // @if not-imported("your-file") { @import "your-file"; }
 $importedOnceFiles: () !default;
 
-@function not-imported($fileName) {
+@function debugger($values...) {
+  //first value function or mixin name
+  //second injected value param
+  //third returning result
+  @each $value in $values {
+    @debug '>>>>>>>>>> ========== DEBUG START ========== <<<<<<<<<<';
+    @debug 'Running - ' +  nth($value, 1);
+    @debug 'Injected - ' +  nth($value, 2);
+    @debug 'Result - ' +  nth($value, 3);
+    @debug '>>>>>>>>>> ========== DEBUG END ========== <<<<<<<<<<';
+
+  }
+  @return true;
+}
+
+@function notImported($fileName) {
   $importedOnceFiles: $importedOnceFiles !global;
   $moduleIndex: index($importedOnceFiles, $fileName);
   @if (($moduleIndex == null) or ($moduleIndex == false)) {
@@ -23,30 +38,30 @@ $importedOnceFiles: () !default;
   @return $size / 16+rem;
 };
 
-@function to-type($size, $type:px) {
+@function toType($size, $type:px) {
   @return ($type($size));
 }
 
-@function get-vw($maxBreakpoint, $target) {
+@function getVw($maxBreakpoint, $target) {
   // 1 vw is equal to 1% of the viewport width
   $vwContext: ($maxBreakpoint * .01) * 1; // 1% viewport width
   @return ($target/$vwContext) * 1vw;
 }
 
-@function get-vh($maxBreakpoint, $target) {
+@function getVh($maxBreakpoint, $target) {
   // 1 vh is equal to 1% of the viewport height
   $vwContext: ($maxBreakpoint * .01) * 1; // 1% viewport height
   @return ($target/$vwContext) * 1vh;
 }
 
-@function fetch-from-multidimensional-map($map, $keys...) {
+@function multiFetch($map, $keys...) {
   @each $key in $keys {
     $map: map-get($map, $key);
   }
   @return $map;
 }
 
-@function change-multidimensional-map-value($map, $keys, $value) {
+@function changeMultidimensionalMapValue($map, $keys, $value) {
   $maps: ($map,);
   $result: null;
 
@@ -88,15 +103,24 @@ $importedOnceFiles: () !default;
   @return $result;
 }
 
-@function width-to-percent($elementPixelWidth: 0, $wrapPixelsWidth: 0) {
-  @return percentage($elementPixelWidth/$wrapPixelsWidth);
+@function widthToPercent($elementPixelWidth: 0, $wrapPixelsWidth: 0) {
+  @if ($debug == true) {
+    @return debugger((function widthToPercent) ($elementPixelHeight $wrapPixelsHeight) (percentage($elementPixelHeight/$wrapPixelsHeight)));
+  } @else {
+    @return percentage($elementPixelWidth/$wrapPixelsWidth);
+  }
 }
 
-@function height-to-percent($elementPixelHeight: 0, $wrapPixelsHeight: 0, $doubleTo: 1.5) {
-  @return percentage($elementPixelHeight/$wrapPixelsHeight) * $doubleTo;
+@function heightToPercent($elementPixelHeight: 0, $wrapPixelsHeight: 0, $doubleTo: 1.5) {
+
+  @if ($debug == true) {
+    @return debugger((function heightToPercent) ($elementPixelHeight $wrapPixelsHeight $doubleTo) (percentage($elementPixelHeight/$wrapPixelsHeight) * $doubleTo));
+  } @else {
+    @return percentage($elementPixelHeight/$wrapPixelsHeight) * $doubleTo;
+  }
 }
 
-@function set-font-family($fontName: null) {
+@function setFontFamily($fontName: null) {
   $font: $fontName;
   @if ($fontName == 'Assistant') {
     $font: 'Assistant', sans-serif;
@@ -107,22 +131,51 @@ $importedOnceFiles: () !default;
   } @else {
     $font: $fontName;
   }
-  @return $font;
+
+  @if ($debug == true) {
+    @return debugger((function setFontFamily) $fontName $font);
+  } @else {
+    @return $font;
+  }
 }
 
-@function set-calc-width($number) {
-  @return calc(100% - #{$number});
+@function setCalcWidth($number) {
+
+  @if ($number == 0) {
+    $calcWidth: 100%;
+  } @else {
+    $calcWidth: calc(100% - #{$number});
+  }
+
+  @if ($debug == true) {
+      @return debugger((function setCalcWidth) $number $calcWidth);
+  } @else {
+    @return $calcWidth;
+  }
 }
 
-@function set-calc-height($number) {
-  @return calc(100% - #{$number});
+
+@function setCalcHeight($number) {
+
+  @if ($number == 0) {
+    $calcHeight: 100%;
+
+  } @else {
+    $calcHeight: calc(100% - #{$number});
+  }
+
+  @if ($debug == true) {
+    @return debugger((function setCalcHeight) $number $calcHeight);
+  } @else {
+    @return $calcHeight;
+  }
 }
 
 @function transition($property: all, $time: 500ms, $style: linear) {
   @return $property $time $style;
 }
 
-@function set-display($style: null) {
+@function setDisplay($style: null) {
 
     @if ($style == null) {
       $style: $display;
