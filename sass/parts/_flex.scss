@@ -1,0 +1,104 @@
+// ==========>>>>> Display Flex Classes <<<<<========== //
+.flex {
+  @include getComponent(display-flex);
+}
+// ===> flex row
+.flex-r {
+  @include getComponent(flex-row);
+}
+
+.flex-rw {
+  @include getComponent(flex-row-wrap);
+}
+
+.flex-rr {
+  @include getComponent(flex-row-reverse);
+}
+
+.flex-rrw {
+  @include getComponent(flex-row-reverse-wrap);
+}
+
+// ===> flex column
+.flex-c {
+  @include getComponent(flex-column);
+}
+
+.flex-cw {
+  @include getComponent(flex-column-wrap);
+}
+
+.flex-cr{
+  @include getComponent(flex-column-reverse);
+}
+
+.flex-crw {
+  @include getComponent(flex-column-reverse-wrap);
+}
+
+// ===> flex justify content
+.justify-f-fs {
+  @include getComponent(justify-start);
+}
+
+.justify-f-fe {
+  @include getComponent(justify-end);
+}
+
+.justify-f-c {
+  @include getComponent(justify-center);
+}
+
+.justify-f-sb {
+  @include getComponent(justify-space-between);
+}
+
+.justify-f-sa{
+  @include getComponent(justify-space-around);
+}
+
+// ===> flex align items
+.items-f-fs {
+  @include getComponent(items-flex-start);
+}
+
+.items-f-fe {
+  @include getComponent(items-flex-end);
+}
+
+.items-f-c {
+  @include getComponent(items-flex-center);
+}
+
+.items-f-b {
+  @include getComponent(items-flex-baseline);
+}
+
+.items-f-s{
+  @include getComponent(items-flex-stretch);
+}
+
+// ===> flex align content
+.content-f-fs {
+  @include getComponent(content-flex-start);
+}
+
+.content-f-fe {
+  @include getComponent(content-flex-end);
+}
+
+.content-f-c {
+  @include getComponent(content-flex-center);
+}
+
+.content-f-sb {
+  @include getComponent(content-flex-space-between);
+}
+
+.content-f-sa {
+  @include getComponent(content-flex-space-around);
+}
+
+.content-f-s {
+  @include getComponent(content-flex-stretch);
+}
